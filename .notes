@@ -1,0 +1,32 @@
+SettingsManager
+    GetSettingsFromUI
+    GeSettingsFromConfig
+
+
+UI Settings 
+    Asset Export Path
+
+    Render Thumbnail
+        Thumbs Size
+        (Thumbs Render)
+
+    Use Lowest LOD for Proxy
+    Use Lowest LOD for Guide
+
+    (Render Targets)
+
+    Add To Asset Gallery
+        Asset Gallery DB File (Create if not exist)
+
+    Additionnal Classes 
+        (megascans,categories)
+
+    Reference On Stage
+
+
+
+JSON Settings 
+    Port
+    Export Location Preset
+
+    UI Last/Default Settings

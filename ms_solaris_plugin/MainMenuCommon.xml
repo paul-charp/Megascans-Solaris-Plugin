@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mainMenu>
+	<menuBar>
+		<subMenu id="quixel_megascans_menu">
+			<label>Megascans</label>
+			<insertBefore>help_menu</insertBefore>
+				<scriptItem id="solaris_plugin">
+					<label>Solaris Plugin (Dev)</label>
+					<insertAfter>megascans_livelink</insertAfter>
+					<scriptCode><![CDATA[
+						#from importlib import reload
+						import msusd.MainWindow as msMainWindow
+
+						#reload(msMainWindow)
+						msMainWindow.initializeWindow()]]>
+					</scriptCode>
+				</scriptItem>
+				<scriptItem id="solaris_plugin_link">
+					<label>Solaris Plugin Documentation</label>
+					<scriptCode><![CDATA[__import__('webbrowser').open('https://github.com/paul-charp/Megascans-Solaris-Plugin')]]></scriptCode>
+					<insertAfter>documentation</insertAfter>
+				</scriptItem>
+		</subMenu>
+	</menuBar>
+</mainMenu>
+
+
