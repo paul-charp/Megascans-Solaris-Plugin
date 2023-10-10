@@ -2,5 +2,10 @@
     "enable": true,
     "name": "ms_solaris_plugin",
     "version": "0.0.1",
-    "hpath": "$HOUDINI_PACKAGE_PATH/ms_solaris_plugin"
+    "hpath": "$HOUDINI_PACKAGE_PATH/ms_solaris_plugin",
+    "env": [
+        {
+            "MSUSDPLUGIN": "$HOUDINI_PACKAGE_PATH/ms_solaris_plugin"
+        }
+    ]
 }

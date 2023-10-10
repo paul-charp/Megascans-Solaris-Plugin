@@ -23,10 +23,21 @@ UI Settings
 
     Reference On Stage
 
-
+    
 
 JSON Settings 
     Port
     Export Location Preset
 
     UI Last/Default Settings
+
+
+
+List Widget
+    Item(AssetNameID, Type, Thumb ?, checkbox, status)
+
+    Batch Selected / Queue Selected
+    Clear Completed
+    Clear Selected
+    Cancel Batch => Clear Queue
+    Skip Batch => Cancel And Next
