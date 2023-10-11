@@ -29,6 +29,11 @@ class MSMainWindow(QMainWindow):
         central_widget.setLayout(layout)
         self.setCentralWidget(central_widget)
 
+        StyleSheet = """
+"""
+
+        self.setStyleSheet(StyleSheet)
+
     @staticmethod
     def getInstance():
         if MSMainWindow.__instance == None:

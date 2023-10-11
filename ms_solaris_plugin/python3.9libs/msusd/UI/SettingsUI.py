@@ -1,4 +1,4 @@
-from PySide2 import QtWidgets
+from PySide2 import QtWidgets, QtCore
 from .Widgets.DirChooser import QDirChooser
 from .Widgets.QAdvLineEdit import QAdvLineEdit
 from ..Utils import SettingsManager
@@ -19,7 +19,7 @@ class SettingsUI(QtWidgets.QWidget):
         self.addWidget("thumbs_size", QAdvLineEdit("Thumbnail Size", value="256"))
         self.addWidget("t_proxy", QtWidgets.QCheckBox("Lowest LOD as Proxy"))
         self.addWidget("t_guide", QtWidgets.QCheckBox("Lowest LOD as Sim Guide"))
-        self.addWidget("t_asset_gallery", QtWidgets.QCheckBox("Add To Asset"))
+        self.addWidget("t_asset_gallery", QtWidgets.QCheckBox("Add To Asset Gallery"))
         self.addWidget(
             "asset_gallery_path",
             QAdvLineEdit("Asset Gallery DB File", value="$HIP/usd/asset_gallery.db"),

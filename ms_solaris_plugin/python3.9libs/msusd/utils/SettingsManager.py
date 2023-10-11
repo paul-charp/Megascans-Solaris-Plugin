@@ -20,7 +20,7 @@ def getJsonSettings():
 
         for file in files:
             with open(file, "r") as json_file:
-                json_data = json.loads(json_file)
+                json_data = json.load(json_file)
             settings_data.append(json_data)
 
         settings = merge_dicts_recursive(settings_data)
