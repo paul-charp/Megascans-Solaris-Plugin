@@ -1,6 +1,7 @@
 from PySide2 import QtWidgets
 from .Widgets.DirChooser import QDirChooser
 from .Widgets.QAdvLineEdit import QAdvLineEdit
+from ..Utils import SettingsManager
 
 
 class SettingsUI(QtWidgets.QWidget):
@@ -48,7 +49,8 @@ class SettingsUI(QtWidgets.QWidget):
         return settings
 
     def saveSettings(self):
-        pass
+        settings = {"export_settings": self.getSettings()}
+        SettingsManager.saveSettings(settings)
 
     def addWidget(self, name, widget):
         self.widgets[name] = widget

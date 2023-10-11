@@ -11,14 +11,14 @@ class QLiveLinkMonitor(QThread):
     Bridge_Call = Signal(str)
     Instance = []
 
-    def __init__(self):
+    def __init__(self, socket_port):
         super(QLiveLinkMonitor, self).__init__()
         QLiveLinkMonitor.Instance.append(self)
 
         self.total_data = b""
         self.buffersize = 4096 * 2
         self.host = "localhost"
-        self.socket_port = 24981  # To Link to settings
+        self.socket_port = socket_port
 
     def __del__(self):
         self.quit()
