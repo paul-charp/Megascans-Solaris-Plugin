@@ -21,7 +21,6 @@ class MSMainWindow(QMainWindow):
         layout = QVBoxLayout()
 
         settingUI = SettingsUI()
-        # batchUI = QLineEdit()
 
         layout.addWidget(settingUI)
         # layout.addWidget(batchUI)
@@ -29,10 +28,19 @@ class MSMainWindow(QMainWindow):
         central_widget.setLayout(layout)
         self.setCentralWidget(central_widget)
 
-        StyleSheet = """
-"""
 
-        self.setStyleSheet(StyleSheet)
+
+        
+        
+    @staticmethod
+    def getStylesheet():
+        StyleSheet = """
+QLineEdit {
+    font-family: Source Code Pro;
+    color: white; 
+}
+     """
+        return StyleSheet
 
     @staticmethod
     def getInstance():

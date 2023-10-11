@@ -3,7 +3,6 @@ from .Widgets.DirChooser import QDirChooser
 from .Widgets.QAdvLineEdit import QAdvLineEdit
 from ..Utils import SettingsManager
 
-
 class SettingsUI(QtWidgets.QWidget):
     def __init__(self):
         super(SettingsUI, self).__init__()
