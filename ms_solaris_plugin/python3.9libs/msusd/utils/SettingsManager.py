@@ -57,3 +57,27 @@ def initSettings():
         settings = getJsonSettings()
 
     return settings
+
+
+class SettingsManager:
+    __instance = None
+
+    def __init__(self):
+        if SettingsManager.__instance == None:
+            SettingsManager.__instance = self
+
+        return SettingsManager.__instance
+
+    def saveSettings():
+        pass
+
+    def defaultSettings():
+        pass
+
+    @property
+    def settings():
+        pass
+
+    @staticmethod
+    def getSettingsManager():
+        pass

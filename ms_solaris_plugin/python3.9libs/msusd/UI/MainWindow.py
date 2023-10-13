@@ -15,6 +15,7 @@ class MSMainWindow(QMainWindow):
             self.setWindowTitle("MS Solaris Plugin")
             self.setFixedWidth(600)
             self.setupMainWindow()
+            self.setStyleSheet(self.getStylesheet())
 
     def setupMainWindow(self):
         central_widget = QWidget()
@@ -28,16 +29,13 @@ class MSMainWindow(QMainWindow):
         central_widget.setLayout(layout)
         self.setCentralWidget(central_widget)
 
-
-
-        
-        
     @staticmethod
     def getStylesheet():
         StyleSheet = """
 QLineEdit {
     font-family: Source Code Pro;
-    color: white; 
+    color: white;
+    height: 17px;
 }
      """
         return StyleSheet

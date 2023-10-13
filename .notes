@@ -4,6 +4,10 @@ SettingsManager
 
 
 UI Settings 
+
+    MENU 
+        Reload Plugin
+
     Asset Export Path
 
     Render Thumbnail
@@ -41,3 +45,16 @@ List Widget
     Clear Selected
     Cancel Batch => Clear Queue
     Skip Batch => Cancel And Next
+
+
+
+
+
+
+
+
+CustomWidgets
+    checkbox
+    String Input
+    Int Input
+    
