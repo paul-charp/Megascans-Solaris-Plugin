@@ -1,24 +1,33 @@
 from PySide2.QtCore import QThread, Signal
 import time, socket
 
+from . import SettingsManager
+from .Utils.jsondebug import tmp_json_write
 
-class QLiveLinkMonitor(QThread):
+
+class SocketListener(QThread):
     """
     Bridge Socket Listener.
     From MSLiveLink Official Plugin
     """
 
     Bridge_Call = Signal(str)
-    Instance = []
+    __instance = None
 
-    def __init__(self, socket_port):
-        super(QLiveLinkMonitor, self).__init__()
-        QLiveLinkMonitor.Instance.append(self)
+    def __init__(self):
+        if SocketListener.__instance != None:
+            SocketListener.getInstance()
+
+        SocketListener.__instance = self
+        super(SocketListener, self).__init__()
+
+        settings = SettingsManager.getInstance()
 
         self.total_data = b""
         self.buffersize = 4096 * 2
         self.host = "localhost"
-        self.socket_port = socket_port
+        self.socket_port = settings.getSettings("socket_port")
+        self.Bridge_Call.connect(tmp_json_write)
 
     def __del__(self):
         self.quit()
@@ -58,3 +67,9 @@ class QLiveLinkMonitor(QThread):
 
         except Exception as e:
             print("Socket Listener Error :", e)
+
+    @staticmethod
+    def getInstance():
+        if SocketListener.__instance == None:
+            SocketListener()
+        return SocketListener.__instance

@@ -29,11 +29,6 @@ class HouLogHandler(logging.StreamHandler):
         hou.logging.log(hlog_entry)
 
 
-if __name__ == "__main__":
-    logger = logging.getLogger("MsUsd")
-    logger.handlers = [HouLogHandler()]  # addHandler in actual code
-    logger.setLevel(logging.DEBUG)
-
-    logger.info("Info message")
-    logger.warning("Warning")
-    logger.error("Error")
+logger = logging.getLogger("MsUsd")
+logger.handlers = [HouLogHandler()]  # addHandler in actual code
+logger.setLevel(logging.DEBUG)

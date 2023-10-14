@@ -1,6 +1,7 @@
 from PySide2.QtWidgets import QMainWindow, QVBoxLayout, QLineEdit, QWidget
 from .SettingsUI import SettingsUI
 import hou
+from .. import SocketListener
 
 
 class MSMainWindow(QMainWindow):
@@ -45,3 +46,7 @@ QLineEdit {
         if MSMainWindow.__instance == None:
             MSMainWindow()
         return MSMainWindow.__instance
+
+    def closeEvent(self, event):
+        socketListener = SocketListener.getInstance()
+        socketListener.quit()
