@@ -1,8 +1,0 @@
-{
-    "socket_port": 24981,
-    "export_paths": [
-        "$HIP/usd",
-        "$MSLIB/usd"
-    ],
-    "export_settings": {}
-}
