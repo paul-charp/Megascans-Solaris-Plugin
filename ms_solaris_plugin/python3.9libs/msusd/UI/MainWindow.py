@@ -13,7 +13,7 @@ class MSMainWindow(QMainWindow):
             super(MSMainWindow, self).__init__(hou.qt.mainWindow())
             MSMainWindow.__instance = self
             self.setWindowTitle("MS Solaris Plugin")
-            self.setFixedWidth(900)
+            self.setMinimumWidth(900)
             self.setupMainWindow()
             self.setStyleSheet(self.getStylesheet())
 

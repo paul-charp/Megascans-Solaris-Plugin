@@ -1,12 +1,12 @@
 from .SocketListener import QLiveLinkMonitor
 from .UI.MainWindow import MSMainWindow
-from .Utils.JsonOutput import tmp_json_write
-from .Utils import SettingsManager
+from .Utils.jsondebug import tmp_json_write
+from . import SettingsManager
 
 
 def initializePlugin():
-    # Get Settings
-    settings = SettingsManager.initSettings()
+    # Get SettingsManager
+    settings = SettingsManager.getInstance()
 
     # Init MainWindow
     mWindow = MSMainWindow.getInstance()
@@ -14,6 +14,6 @@ def initializePlugin():
 
     # Init SocketListener
     if len(QLiveLinkMonitor.Instance) == 0:
-        bridge_monitor = QLiveLinkMonitor(settings.get("socket_port"))
+        bridge_monitor = QLiveLinkMonitor(settings.getSettings("socket_port"))
         bridge_monitor.Bridge_Call.connect(tmp_json_write)
         # bridge_monitor.start()

@@ -1,12 +1,13 @@
 from PySide2 import QtWidgets
 from .Widgets import InputString
-from ..Utils import SettingsManager
+from .. import SettingsManager
 import hou
+
 
 class SettingsUI(QtWidgets.QWidget):
     def __init__(self):
         super(SettingsUI, self).__init__()
-
+        self.settings = SettingsManager.getInstance()
         self.widgets = {}
         self.setLayout(QtWidgets.QVBoxLayout())
 
@@ -15,10 +16,12 @@ class SettingsUI(QtWidgets.QWidget):
     def setupSettingsUI(self):
         self.addWidget(
             "export_path",
-            InputString(label="Export Path",
-                        defaultValue="$HIP/usd",
-                        menu=['$HIP/usd', '$MSLIB/usd'],
-                        fileType=hou.fileType.Directory),
+            InputString(
+                label="Export Path",
+                defaultValue="$HIP/usd",
+                menu=self.settings.getSettings("export_paths"),
+                fileType=hou.fileType.Directory,
+            ),
         )
 
         self.addWidget("t_render_thumbs", QtWidgets.QCheckBox("Render Thumbnails"))
@@ -32,18 +35,19 @@ class SettingsUI(QtWidgets.QWidget):
         self.addWidget("t_proxy", QtWidgets.QCheckBox("Lowest LOD as Proxy"))
         self.addWidget("t_guide", QtWidgets.QCheckBox("Lowest LOD as Sim Guide"))
         self.addWidget("t_asset_gallery", QtWidgets.QCheckBox("Add To Asset Gallery"))
-        
+
         self.addWidget(
             "asset_gallery_path",
-            InputString(label="Asset Gallery File",
-                        defaultValue="$HIP/asset_gallery.db",
-                        fileType=hou.fileType.Gallery),
+            InputString(
+                label="Asset Gallery File",
+                defaultValue="$HIP/asset_gallery.db",
+                fileType=hou.fileType.Gallery,
+            ),
         )
         self.addWidget("t_extra_classes", QtWidgets.QCheckBox("Add Extra Classes"))
         self.addWidget(
             "t_ref_on_stage", QtWidgets.QCheckBox("Reference Asset on Stage")
         )
-        
 
     def getSettings(self):
         settings = {}
@@ -61,8 +65,7 @@ class SettingsUI(QtWidgets.QWidget):
         return settings
 
     def saveSettings(self):
-        settings = {"export_settings": self.getSettings()}
-        SettingsManager.saveSettings(settings)
+        pass
 
     def addWidget(self, name, widget):
         self.widgets[name] = widget
