@@ -14,7 +14,7 @@ class MSMainWindow(QMainWindow):
             super(MSMainWindow, self).__init__(hou.qt.mainWindow())
             MSMainWindow.__instance = self
             self.setWindowTitle("MS Solaris Plugin")
-            self.setMinimumWidth(900)
+            self.setMinimumWidth(600)
             self.setupMainWindow()
             self.setStyleSheet(self.getStylesheet())
 
@@ -36,7 +36,6 @@ class MSMainWindow(QMainWindow):
 QLineEdit {
     font-family: Source Code Pro;
     color: white;
-    height: 25px;
 }
      """
         return StyleSheet
