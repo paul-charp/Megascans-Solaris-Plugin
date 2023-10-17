@@ -5,9 +5,13 @@
     "hpath": "$HOUDINI_PACKAGE_PATH/ms_solaris_plugin",
     "env": [
         {
-            "MSUSDPLUGIN": "$HOUDINI_PACKAGE_PATH/ms_solaris_plugin",
-            "MSUSD_LOG_FILE": 1,
-            "MSUSD_CONSOLE_VERBOSITY": 2
+            "MSUSDPLUGIN": "$HOUDINI_PACKAGE_PATH/ms_solaris_plugin"
+        },
+        {
+            "MSUSD_LOG_FILE": 1
+        },
+        {
+            "MSUSD_CONSOLE_VERBOSITY": 0
         }
     ]
 }
