@@ -64,19 +64,19 @@ class Logger():
         return log_entry
     
     
-    def Fatal(self, message):
+    def fatal(self, message):
         return self.log(self, message, severity=hou.severityType.Fatal)
     
-    def Error(self, message):
+    def error(self, message):
         return self.log(self, message, severity=hou.severityType.Error)
     
-    def Warning(self, message):
+    def warning(self, message):
         return self.log(self, message, severity=hou.severityType.Warning)
     
-    def ImportantMessage(self, message):
+    def importantMessage(self, message):
         return self.log(self, message, severity=hou.severityType.ImportantMessage)
     
-    def Message(self, message):
+    def message(self, message):
         return self.log(self, message, severity=hou.severityType.Message)
     
     
