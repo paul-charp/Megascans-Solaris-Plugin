@@ -62,6 +62,7 @@ class SocketListener(QThread):
                         if data:
                             self.total_data += data
                         else:
+                            self.logger.message(f"Received {len(self.total_data)}bytes")
                             break
 
                     time.sleep(0.05)
