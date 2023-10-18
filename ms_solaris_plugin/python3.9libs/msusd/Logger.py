@@ -97,7 +97,9 @@ class Logger:
 
         severity = str(severity).split(".")[-1].upper()
 
-        print(time, severity, context, message)
+        print_str = f"{time} {severity} {context} - {message}"
+
+        print(print_str)
 
     @staticmethod
     def _getDefaultConsoleVerbosity():
