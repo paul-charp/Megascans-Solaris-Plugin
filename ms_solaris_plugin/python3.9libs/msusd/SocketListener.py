@@ -1,6 +1,7 @@
 from PySide2.QtCore import QThread, Signal
 import time, socket
 
+from .Logger import Logger
 from . import SettingsManager
 from .Utils.jsondebug import tmp_json_write
 
@@ -21,12 +22,13 @@ class SocketListener(QThread):
         SocketListener.__instance = self
         super(SocketListener, self).__init__()
 
-        settings = SettingsManager.getInstance()
+        self.settings = SettingsManager.getInstance()
+        self.logger = Logger.getLogger("SocketListener")
 
         self.total_data = b""
         self.buffersize = 4096 * 2
         self.host = "localhost"
-        self.socket_port = settings.getSettings("socket_port")
+        self.socket_port = self.settings.getSettings("socket_port")
         self.Bridge_Call.connect(tmp_json_write)
 
     def __del__(self):
@@ -42,6 +44,7 @@ class SocketListener(QThread):
         try:
             socket_ = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             socket_.bind((self.host, self.socket_port))
+            self.logger.message(f"Starting SocketListener on port {self.socket_port}")
 
             while True:
                 socket_.listen(5)
@@ -66,7 +69,7 @@ class SocketListener(QThread):
                     time.sleep(0.05)
 
         except Exception as e:
-            print("Socket Listener Error :", e)
+            self.logger.warning(e)
 
     @staticmethod
     def getInstance():

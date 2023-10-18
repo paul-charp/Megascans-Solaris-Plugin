@@ -2,6 +2,7 @@ import os
 import hou
 import json
 from .Utils import dictutils
+from .Logger import Logger
 
 
 class SettingsManager:
@@ -21,18 +22,27 @@ class SettingsManager:
 
         SettingsManager.__instance = self
 
+        self.logger = Logger.getLogger("SettingsManager")
+
         self.__settings = {}
 
         jsonSettings = SettingsManager._getJsonSettings()
         if jsonSettings != None:
-            if SettingsManager.validateSettings(jsonSettings)[0]:
+            result, error = SettingsManager.validateSettings(jsonSettings)
+            if result:
                 self.putSettings(jsonSettings)
 
             else:
+                self.logger.warning(error)
                 self.putSettings(SettingsManager.defaultSettings)
         else:
+            self.logger.importantMessage(
+                "Settings file not found, creating default settings"
+            )
             self.putSettings(SettingsManager.defaultSettings)
             self.saveSettings()
+
+        self.logger.message("Settings Initialized")
 
     @staticmethod
     def getInstance():
@@ -95,6 +105,8 @@ class SettingsManager:
 
         with open(settingsFile, "w+") as settingsJson:
             json.dump(self.getSettings(), settingsJson, indent=4)
+
+        self.logger.message("Settings Saved")
 
     def getSettings(self, key=None):
         if key != None:

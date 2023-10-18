@@ -44,6 +44,9 @@ class Logger:
         return Logger.__loggers.get(context)
 
     def log(self, message, severity=None):
+        if type(message) != str:
+            message = str(message)
+
         log_entry = hou.logging.LogEntry(
             message=message,
             source=Logger.SOURCE_NAME,

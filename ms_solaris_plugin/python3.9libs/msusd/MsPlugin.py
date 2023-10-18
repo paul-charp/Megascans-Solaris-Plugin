@@ -1,10 +1,8 @@
 from . import SocketListener
-from .UI.MainWindow import MSMainWindow
-from .Utils.jsondebug import tmp_json_write
 from . import SettingsManager
-from .Logger import Logger
+from . import Logger
 
-import hou
+from .UI.MainWindow import MSMainWindow
 
 
 def initializePlugin():
