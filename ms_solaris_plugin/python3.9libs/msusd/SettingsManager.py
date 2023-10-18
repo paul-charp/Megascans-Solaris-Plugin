@@ -1,7 +1,7 @@
 import os
 import hou
 import json
-from .Utils import dictutils
+from .Utils import dictutils, jsonutils
 from .Logger import Logger
 
 
@@ -57,9 +57,7 @@ class SettingsManager:
         if not os.path.isfile(settingsFile):
             return None
 
-        with open(settingsFile, "r") as settingsJson:
-            json_data = json.load(settingsJson)
-
+        json_data = jsonutils.read_json(settingsFile)
         return json_data
 
     @staticmethod
@@ -103,8 +101,7 @@ class SettingsManager:
     def saveSettings(self):
         settingsFile = hou.text.expandString(SettingsManager.settingsFile)
 
-        with open(settingsFile, "w+") as settingsJson:
-            json.dump(self.getSettings(), settingsJson, indent=4)
+        jsonutils.write_json(self.getSettings(), settingsFile, indent=4)
 
         self.logger.message("Settings Saved")
 
