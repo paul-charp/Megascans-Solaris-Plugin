@@ -28,7 +28,6 @@ class Logger:
         self.setConsoleVerbosity(0)
 
         if Logger.SOURCE_NAME not in hou.logging.sources():
-            print("createSource")
             hou.logging.createSource(Logger.SOURCE_NAME)
 
             if hou.getenv("MSUSD_LOG_FILE") == "1":
@@ -79,14 +78,14 @@ class Logger:
         return self.log(message, severity=hou.severityType.Message)
 
     @staticmethod
-    def _initFileSink():
+    def _initFileSink() -> hou.logging.FileSink:
         log_file = hou.text.expandString(Logger.LOG_FILE)
         file_sink = hou.logging.FileSink(log_file)
         file_sink.connect(Logger.SOURCE_NAME)
         return file_sink
 
     @staticmethod
-    def _logToConsole(log_entry):
+    def _logToConsole(log_entry: hou.logging.LogEntry) -> str:
         message = log_entry.message()
         time = log_entry.time()
         context = log_entry.sourceContext()
@@ -98,29 +97,35 @@ class Logger:
         severity = str(severity).split(".")[-1].upper()
 
         print_str = f"{time} {severity} {context} - {message}"
-
         print(print_str)
+        return print_str
 
     @staticmethod
-    def _getDefaultConsoleVerbosity():
+    def _getDefaultConsoleVerbosity() -> int:
         default_console_verbosity = hou.getenv("MSUSD_CONSOLE_VERBOSITY")
-
+        default_console_verbosity = int(default_console_verbosity)
         try:
+            default_console_verbosity = Logger._clampVerbosityIndex(
+                int(default_console_verbosity)
+            )
             Logger._getHouSeverity(default_console_verbosity)
 
-        except (IndexError, TypeError):
+        except (IndexError, TypeError, ValueError) as e:
             default_console_verbosity = Logger.DEFAULT_CONSOLE_VERBOSITY
 
         return default_console_verbosity
 
     @staticmethod
-    def _getHouSeverity(key):
+    def _clampVerbosityIndex(index: int) -> int:
+        return sorted((0, index, len(Logger.HOU_SEVERITY_MAP) - 1))[1]
+
+    @staticmethod
+    def _getHouSeverity(key: int) -> hou.EnumValue:
         return Logger.HOU_SEVERITY_MAP[key]
 
-    def setConsoleVerbosity(self, console_verbosity, force=False):
-        if force:
-            self.console_verbosity = console_verbosity
-
-        else:
+    def setConsoleVerbosity(self, console_verbosity: int, force=False):
+        if not force:
             default_verbosity = Logger._getDefaultConsoleVerbosity()
-            self.console_verbosity = max(default_verbosity, console_verbosity)
+            console_verbosity = max(default_verbosity, console_verbosity)
+
+        self.console_verbosity = Logger._clampVerbosityIndex(console_verbosity)
