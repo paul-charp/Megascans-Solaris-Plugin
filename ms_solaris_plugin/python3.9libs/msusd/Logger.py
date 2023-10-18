@@ -5,6 +5,7 @@ import hou
 class Logger:
     __loggers = {}
 
+    fileSink = None
     SOURCE_NAME = "MSUSD"
     LOG_FILE = "$HOUDINI_TEMP_DIR/msusd.log"
     DEFAULT_CONSOLE_VERBOSITY = 2
@@ -26,13 +27,15 @@ class Logger:
 
         self.setConsoleVerbosity(0)
 
-        # if Logger.source_name not in hou.logging.sources():
-        hou.logging.createSource(Logger.SOURCE_NAME)
+        if Logger.SOURCE_NAME not in hou.logging.sources():
+            print("createSource")
+            hou.logging.createSource(Logger.SOURCE_NAME)
 
-        # if hou.getenv("MSUSD_LOG_FILE") == 1:
-        print(self.context, "init!")
+            if hou.getenv("MSUSD_LOG_FILE") == "1":
+                if Logger.fileSink == None:
+                    Logger.fileSink = Logger._initFileSink()
+
         self.message(f"Logger for {self.context} initialized")
-        Logger._initFileSink()
 
     @staticmethod
     def getLogger(context) -> "Logger":
@@ -76,7 +79,7 @@ class Logger:
     def _initFileSink():
         log_file = hou.text.expandString(Logger.LOG_FILE)
         file_sink = hou.logging.FileSink(log_file)
-        file_sink.connect(Logger.source_name)
+        file_sink.connect(Logger.SOURCE_NAME)
         return file_sink
 
     @staticmethod
