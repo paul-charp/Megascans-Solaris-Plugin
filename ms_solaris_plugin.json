@@ -11,7 +11,7 @@
             "MSUSD_LOG_FILE": 1
         },
         {
-            "MSUSD_CONSOLE_VERBOSITY": 0
+            "MSUSD_CONSOLE_VERBOSITY": 2
         }
     ]
 }

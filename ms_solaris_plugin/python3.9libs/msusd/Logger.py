@@ -5,16 +5,16 @@ import hou
 class Logger:
     __loggers = {}
 
-    source_name = "MSUSD"
-    log_file = "$HOUDINI_TEMP_DIR/msusd.log"
-    default_console_verbosity = 0
-    hou_severity_map = {
-        0: hou.severityType.Message,
-        1: hou.severityType.ImportantMessage,
-        2: hou.severityType.Warning,
-        3: hou.severityType.Error,
-        4: hou.severityType.Fatal,
-    }
+    SOURCE_NAME = "MSUSD"
+    LOG_FILE = "$HOUDINI_TEMP_DIR/msusd.log"
+    DEFAULT_CONSOLE_VERBOSITY = 2
+    HOU_SEVERITY_MAP = [
+        hou.severityType.Fatal,
+        hou.severityType.Error,
+        hou.severityType.Warning,
+        hou.severityType.ImportantMessage,
+        hou.severityType.Message,
+    ]
 
     def __init__(self, context):
         if Logger.__loggers.get(context) != None:
@@ -24,13 +24,13 @@ class Logger:
 
         self.context = context
 
-        self.setConsoleVerbosity(4)
+        self.setConsoleVerbosity(0)
 
         # if Logger.source_name not in hou.logging.sources():
-        hou.logging.createSource(Logger.source_name)
+        hou.logging.createSource(Logger.SOURCE_NAME)
 
         # if hou.getenv("MSUSD_LOG_FILE") == 1:
-
+        print(self.context, "init!")
         self.message(f"Logger for {self.context} initialized")
         Logger._initFileSink()
 
@@ -43,15 +43,16 @@ class Logger:
     def log(self, message, severity=None):
         log_entry = hou.logging.LogEntry(
             message=message,
-            source=Logger.source_name,
+            source=Logger.SOURCE_NAME,
             source_context=self.context,
             severity=severity,
         )
 
-        hou.logging.log(log_entry, source_name=Logger.source_name)
+        hou.logging.log(log_entry, source_name=Logger.SOURCE_NAME)
 
         if severity != None:
-            if severity < self.console_verbosity:
+            verbosity = Logger.HOU_SEVERITY_MAP.index(severity)
+            if verbosity <= self.console_verbosity:
                 Logger._logToConsole(log_entry)
 
         return log_entry
@@ -73,7 +74,7 @@ class Logger:
 
     @staticmethod
     def _initFileSink():
-        log_file = hou.text.expandString(Logger.log_file)
+        log_file = hou.text.expandString(Logger.LOG_FILE)
         file_sink = hou.logging.FileSink(log_file)
         file_sink.connect(Logger.source_name)
         return file_sink
@@ -95,22 +96,23 @@ class Logger:
     @staticmethod
     def _getDefaultConsoleVerbosity():
         default_console_verbosity = hou.getenv("MSUSD_CONSOLE_VERBOSITY")
-        if (
-            default_console_verbosity == None
-            or default_console_verbosity not in Logger.hou_severity_map.keys()
-        ):
-            default_console_verbosity = Logger.default_console_verbosity
+
+        try:
+            Logger._getHouSeverity(default_console_verbosity)
+
+        except (IndexError, TypeError):
+            default_console_verbosity = Logger.DEFAULT_CONSOLE_VERBOSITY
 
         return default_console_verbosity
 
     @staticmethod
     def _getHouSeverity(key):
-        return Logger.hou_severity_map[key]
+        return Logger.HOU_SEVERITY_MAP[key]
 
-    def setConsoleVerbosity(self, console_verbosity):
-        default_verbosity = Logger._getDefaultConsoleVerbosity()
+    def setConsoleVerbosity(self, console_verbosity, force=False):
+        if force:
+            self.console_verbosity = console_verbosity
 
-        console_verbosity = min(default_verbosity, console_verbosity)
-
-        hou_severity = Logger._getHouSeverity(console_verbosity)
-        self.console_verbosity = hou_severity
+        else:
+            default_verbosity = Logger._getDefaultConsoleVerbosity()
+            self.console_verbosity = max(default_verbosity, console_verbosity)
