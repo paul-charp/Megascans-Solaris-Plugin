@@ -9,7 +9,7 @@ import hou
 
 def initializePlugin():
     logger = Logger.getLogger("Debug")
-    logger.setConsoleVerbosity(0)
+    logger.setConsoleVerbosity(4)
 
     logger.fatal("Fatal")
     logger.error("Error")
