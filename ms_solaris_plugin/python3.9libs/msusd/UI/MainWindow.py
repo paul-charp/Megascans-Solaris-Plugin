@@ -1,5 +1,6 @@
 from PySide2.QtWidgets import QMainWindow, QVBoxLayout, QLineEdit, QWidget
 from .SettingsUI import SettingsUI
+from .BatchUI import BatchController, BatchModel, BatchView
 import hou
 from .. import SocketListener
 
@@ -25,7 +26,12 @@ class MSMainWindow(QMainWindow):
         settingUI = SettingsUI()
 
         layout.addWidget(settingUI)
-        # layout.addWidget(batchUI)
+
+        self.model = BatchModel()
+        self.view = BatchView()
+        self.controller = BatchController(self.model, self.view)
+
+        layout.addWidget(self.view)
 
         central_widget.setLayout(layout)
         self.setCentralWidget(central_widget)
