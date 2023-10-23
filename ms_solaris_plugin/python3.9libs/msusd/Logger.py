@@ -17,7 +17,7 @@ class Logger:
         hou.severityType.Message,
     ]
 
-    def __init__(self, context):
+    def __init__(self, context: str):
         if Logger.__loggers.get(context) != None:
             Logger.getLogger(context)
 
@@ -37,45 +37,10 @@ class Logger:
         self.message(f"Logger for {self.context} initialized")
 
     @staticmethod
-    def getLogger(context) -> "Logger":
+    def getLogger(context: str) -> "Logger":
         if Logger.__loggers.get(context) == None:
             Logger(context)
         return Logger.__loggers.get(context)
-
-    def log(self, message, severity=None):
-        if type(message) != str:
-            message = str(message)
-
-        log_entry = hou.logging.LogEntry(
-            message=message,
-            source=Logger.SOURCE_NAME,
-            source_context=self.context,
-            severity=severity,
-        )
-
-        hou.logging.log(log_entry, source_name=Logger.SOURCE_NAME)
-
-        if severity != None:
-            verbosity = Logger.HOU_SEVERITY_MAP.index(severity)
-            if verbosity <= self.console_verbosity:
-                Logger._logToConsole(log_entry)
-
-        return log_entry
-
-    def fatal(self, message):
-        return self.log(message, severity=hou.severityType.Fatal)
-
-    def error(self, message):
-        return self.log(message, severity=hou.severityType.Error)
-
-    def warning(self, message):
-        return self.log(message, severity=hou.severityType.Warning)
-
-    def importantMessage(self, message):
-        return self.log(message, severity=hou.severityType.ImportantMessage)
-
-    def message(self, message):
-        return self.log(message, severity=hou.severityType.Message)
 
     @staticmethod
     def _initFileSink() -> hou.logging.FileSink:
@@ -122,6 +87,41 @@ class Logger:
     @staticmethod
     def _getHouSeverity(key: int) -> hou.EnumValue:
         return Logger.HOU_SEVERITY_MAP[key]
+
+    def log(self, message, severity=None) -> hou.logging.LogEntry:
+        if type(message) != str:
+            message = str(message)
+
+        log_entry = hou.logging.LogEntry(
+            message=message,
+            source=Logger.SOURCE_NAME,
+            source_context=self.context,
+            severity=severity,
+        )
+
+        hou.logging.log(log_entry, source_name=Logger.SOURCE_NAME)
+
+        if severity != None:
+            verbosity = Logger.HOU_SEVERITY_MAP.index(severity)
+            if verbosity <= self.console_verbosity:
+                Logger._logToConsole(log_entry)
+
+        return log_entry
+
+    def fatal(self, message) -> hou.logging.LogEntry:
+        return self.log(message, severity=hou.severityType.Fatal)
+
+    def error(self, message) -> hou.logging.LogEntry:
+        return self.log(message, severity=hou.severityType.Error)
+
+    def warning(self, message) -> hou.logging.LogEntry:
+        return self.log(message, severity=hou.severityType.Warning)
+
+    def importantMessage(self, message) -> hou.logging.LogEntry:
+        return self.log(message, severity=hou.severityType.ImportantMessage)
+
+    def message(self, message) -> hou.logging.LogEntry:
+        return self.log(message, severity=hou.severityType.Message)
 
     def setConsoleVerbosity(self, console_verbosity: int, force=False):
         if not force:
