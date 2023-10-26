@@ -18,6 +18,13 @@ class Logger:
     ]
 
     def __init__(self, context: str):
+        """
+        It sets up the logger for a given context, and initializes it with a default verbosity of 0.
+        If there's already an existing logger for that context, it returns that one instead.
+
+        Args:
+            context: str: Identify the loggers
+        """
         if Logger.__loggers.get(context) != None:
             Logger.getLogger(context)
 
@@ -38,12 +45,31 @@ class Logger:
 
     @staticmethod
     def getLogger(context: str) -> "Logger":
+        """
+        Factory function that returns a Logger object.
+            If the logger has not been created yet.
+            Otherwise, it will return an existing logger.
+
+        Args:
+            context: str: Create a new logger object with the context as its name
+
+        Returns:
+            A logger object
+        """
         if Logger.__loggers.get(context) == None:
             Logger(context)
         return Logger.__loggers.get(context)
 
     @staticmethod
     def _initFileSink() -> hou.logging.FileSink:
+        """
+        The _initFileSink function is a private function that initializes the file sink.
+            The file sink is used to write log messages to a text file.
+            It takes no arguments and returns an instance of hou.logging.FileSink.
+
+        Returns:
+            A file sink
+        """
         log_file = hou.text.expandString(Logger.LOG_FILE)
         file_sink = hou.logging.FileSink(log_file)
         file_sink.connect(Logger.SOURCE_NAME)
@@ -51,6 +77,15 @@ class Logger:
 
     @staticmethod
     def _logToConsole(log_entry: hou.logging.LogEntry) -> str:
+        """
+        Returns and prints to the console a string representation of the hou.logging.LogEntry object.
+
+        Args:
+            log_entry: hou.logging.LogEntry: Pass the log entry to the function
+
+        Returns:
+            A string
+        """
         message = log_entry.message()
         time = log_entry.time()
         context = log_entry.sourceContext()
@@ -67,6 +102,22 @@ class Logger:
 
     @staticmethod
     def _getDefaultConsoleVerbosity() -> int:
+        """
+        Private function that returns the default console verbosity.
+            The default console verbosity is determined by the MSUSD_CONSOLE_VERBOSITY environment variable,
+            which can be set to any of the following values:
+                0 - Fatal (less verbose)
+                1 - Error
+                2 - Warning (default)
+                3 - ImportantMessage
+                4 - Message (most verbose)
+
+            If the variable is not set or is not an integer the verbosity defaults to 2 - Warning :
+                (see constant : Logger.DEFAULT_CONSOLE_VERBOSITY)
+
+        Returns:
+            An integer
+        """
         default_console_verbosity = hou.getenv("MSUSD_CONSOLE_VERBOSITY")
         default_console_verbosity = int(default_console_verbosity)
         try:
@@ -82,13 +133,42 @@ class Logger:
 
     @staticmethod
     def _clampVerbosityIndex(index: int) -> int:
+        """
+        Helper function that takes an integer index and returns the closest valid
+        index to it.  The valid indices are 0, 1, 2, 3, 4.  (Defined by the length of the Logger.HOU_SEVERITY_MAP array.)
+
+        Args:
+            index: int: Index to clamp
+
+        Returns:
+            Clamped Index
+        """
         return sorted((0, index, len(Logger.HOU_SEVERITY_MAP) - 1))[1]
 
     @staticmethod
     def _getHouSeverity(key: int) -> hou.EnumValue:
+        """
+        Helper function that takes in an integer and returns the corresponding hou.EnumValue object from the Logger.HOU_SEVERITY_MAP dictionary.
+
+        Args:
+            key: int: Severity index
+
+        Returns:
+            The hou.severityType enum value corresponding to the index.
+        """
         return Logger.HOU_SEVERITY_MAP[key]
 
-    def log(self, message, severity=None) -> hou.logging.LogEntry:
+    def log(self, message, severity: hou.EnumValue = None) -> hou.logging.LogEntry:
+        """
+        Wrapper around the hou.logging.log function, which allows for logging to the Houdini console and log file.
+
+        Args:
+            message: str or Exception: Pass the message to be logged (can be a string or a Exception object that will be converted to a string)
+            severity: hou.SeverityType enum value: Determine the severity of the message (defaults to None)
+
+        Returns:
+            A hou.logging.LogEntry object
+        """
         if type(message) != str:
             message = str(message)
 
@@ -109,21 +189,78 @@ class Logger:
         return log_entry
 
     def fatal(self, message) -> hou.logging.LogEntry:
+        """
+        Log a message with the severity of Fatal.
+            Wrapper around the log() method.
+
+        Args:
+            message: message to log
+
+        Returns:
+            A logentry object
+        """
         return self.log(message, severity=hou.severityType.Fatal)
 
     def error(self, message) -> hou.logging.LogEntry:
+        """
+        Log a message with the severity of Error.
+            Wrapper around the log() method.
+
+        Args:
+            message: message to log
+
+        Returns:
+            A logentry object
+        """
         return self.log(message, severity=hou.severityType.Error)
 
     def warning(self, message) -> hou.logging.LogEntry:
+        """
+        Log a message with the severity of Warning.
+            Wrapper around the log() method.
+
+        Args:
+            message: message to log
+
+        Returns:
+            A logentry object
+        """
         return self.log(message, severity=hou.severityType.Warning)
 
     def importantMessage(self, message) -> hou.logging.LogEntry:
+        """
+        Log a message with the severity of ImportantMessage.
+            Wrapper around the log() method.
+
+        Args:
+            message: message to log
+
+        Returns:
+            A logentry object
+        """
         return self.log(message, severity=hou.severityType.ImportantMessage)
 
     def message(self, message) -> hou.logging.LogEntry:
+        """
+        Log a message with the severity of Message.
+            Wrapper around the log() method.
+
+        Args:
+            message: message to log
+
+        Returns:
+            A logentry object
+        """
         return self.log(message, severity=hou.severityType.Message)
 
     def setConsoleVerbosity(self, console_verbosity: int, force=False):
+        """
+        Sets the console verbosity of a Logger object.
+
+        Args:
+            console_verbosity: int: Set the verbosity level of the console
+            force: Force the verbosity level to be set even if it is lower than the default console verbosity
+        """
         if not force:
             default_verbosity = Logger._getDefaultConsoleVerbosity()
             console_verbosity = max(default_verbosity, console_verbosity)
