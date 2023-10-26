@@ -91,9 +91,7 @@ class SettingsManager:
         return json_data
 
     @staticmethod
-    def validateSettings(
-        settings, defaultSettings=defaultSettings
-    ) -> tuple(bool, Exception):
+    def validateSettings(settings, defaultSettings=defaultSettings) -> tuple:
         """
         Takes a settings dictionary and validates it against the defaultSettings.
             Checks keys presence and value types.
