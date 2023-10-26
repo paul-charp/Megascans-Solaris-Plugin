@@ -3,6 +3,15 @@ import hou
 
 
 class Logger:
+    """
+    Logger class.
+        Overall just a big wrapper around the hou.logging module functionalities.
+        Manage multiples source context in the source "MSUSD" (Logger.SOURCE_NAME)
+        Sends all logs to the file defined in Logger.LOG_FILE
+        Sends logs to console if a log severity is higher that the matching console verbosity set for the context.
+        Use Logger.getLogger() to get and create instances of this class.
+    """
+
     __loggers = {}
 
     fileSink = None
