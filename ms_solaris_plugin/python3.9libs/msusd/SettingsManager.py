@@ -133,7 +133,6 @@ class SettingsManager:
             The new values will overwrite any existing ones.
 
         Args:
-            self: Represent the instance of the class
             settings: dict: the settings to replace/merge
         """
         result, error = dictutils.validateDict(settings)
@@ -151,7 +150,6 @@ class SettingsManager:
             If there are any sub-dictionaries in between, they will be created if necessary.
 
         Args:
-            self: Represent the instance of the class
             key: str: Set the key of the setting (navigate nested dicts with "." between keys)
             value: Set the value of a key in the settings dictionary
         """
@@ -161,9 +159,6 @@ class SettingsManager:
         """
         Saves the settings to the json file.
             The function takes no arguments and returns nothing.
-
-        Args:
-            self: Represent the instance of the class
         """
         settingsFile = hou.text.expandString(SettingsManager.settingsFile)
 
@@ -177,7 +172,6 @@ class SettingsManager:
                 If not, it will return the complete settings dictionary.
 
         Args:
-            self: Represent the instance of the class
             key: Get a specific value from the settings dictionary
 
         Returns:
