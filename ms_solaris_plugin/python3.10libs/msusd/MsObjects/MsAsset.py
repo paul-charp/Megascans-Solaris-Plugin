@@ -83,10 +83,18 @@ class MsTexturableAsset(MsAsset):
         
         self.textures = []
         
-        for tex_data in asset_data['component']:
+        textures_data = asset_data['components'] + asset_data['components-billboard']
+        
+        for tex_data in textures_data:
+            
+            billboardLod = False
+            if tex_data in asset_data['components-billboard']:
+                billboardLod = True
+            
             self.textures.append(
-                MsTexture.fromTextureData(tex_data)
+                MsTexture.fromTextureData(tex_data, billboardLod=billboardLod)
             )
+
     
     def getTexture(self, component, lod = None) -> MsTexture:
         for texture in self.textures:
@@ -107,7 +115,7 @@ class MsTexturableAsset(MsAsset):
     
     
     
-class Ms3DAsset(MsAsset, MsTexturableAsset):
+class Ms3DAsset(MsTexturableAsset):
     def __init__(self, asset_data):
         super().__init__(asset_data)
         
@@ -130,18 +138,18 @@ class Ms3DAsset(MsAsset, MsTexturableAsset):
         
         self.lodCount = len(self.lods)
         
-        
+        x, y ,z = 0.0, 0.0, 0.0
         for meta in asset_data['meta']:
             match meta['key']:
-                case 'lenght':
-                    x = int(meta['value'][:-1])
+                case 'length':
+                    x = float(meta['value'][:-1])
                     
                 case 'width':
-                    z = int(meta['value'][:-1])
+                    z = float(meta['value'][:-1])
                     
                 case 'height':
-                    y = int(meta['value'][:-1])
-                 
+                    y = float(meta['value'][:-1])
+                    
         self.size = (x, y, z)
         
     def getMesh(self, var: int = 1, lod: int = 0) -> MsMesh:
@@ -150,24 +158,25 @@ class Ms3DAsset(MsAsset, MsTexturableAsset):
                 return mesh
         
         
-class MsSurfaceAsset(MsAsset, MsTexturableAsset):
+class MsSurfaceAsset(MsTexturableAsset):
     def __init__(self, asset_data):
         super().__init__(asset_data)
         
         # TODO: Make it work for surface area !
+        x, y ,z = 0.0, 0.0, 0.0
         for meta in asset_data['meta']:
             match meta['key']:
                 case 'lenght':
-                    x = int(meta['value'][:-1])
+                    x = float(meta['value'][:-1])
                     
                 case 'width':
-                    z = int(meta['value'][:-1])
+                    z = float(meta['value'][:-1])
                     
                 case 'height':
-                    y = int(meta['value'][:-1])
+                    y = float(meta['value'][:-1])
                         
         self.size = (x, y, z)
 
-class Ms3DPlant(MsAsset, Ms3DAsset):
+class Ms3DPlant(Ms3DAsset):
     def __init__(self, asset_data):
         super().__init__(asset_data)
