@@ -36,6 +36,7 @@ class SocketListener(QThread):
         self.wait()
 
     def stop(self):
+        self.logger.message("Socket Listener Stopped")
         self.terminate()
 
     def run(self):
