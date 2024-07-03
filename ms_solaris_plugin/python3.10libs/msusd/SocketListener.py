@@ -4,6 +4,7 @@ import time, socket
 from .Logger import Logger
 from . import SettingsManager
 from .Utils.jsondebug import tmp_json_write
+from .Batcher import debugAssets
 
 
 class SocketListener(QThread):
@@ -29,7 +30,8 @@ class SocketListener(QThread):
         self.buffersize = 4096 * 2
         self.host = "localhost"
         self.socket_port = self.settings.getSettings("socket_port")
-        self.Bridge_Call.connect(tmp_json_write)
+        #self.Bridge_Call.connect(tmp_json_write)
+        self.Bridge_Call.connect(debugAssets)
 
     def __del__(self):
         self.quit()
