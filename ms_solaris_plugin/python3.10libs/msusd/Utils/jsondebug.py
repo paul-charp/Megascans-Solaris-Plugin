@@ -6,7 +6,6 @@ import hou
 
 from . import jsonutils
 from ..Logger import Logger
-from ..BatchUtils import parser
 
 
 @Slot(str)
@@ -15,10 +14,8 @@ def tmp_json_write(jsondata):
 
     for asset in assets_data:
         
-        outData = parser.parseAssetData(asset)
-        
         file = os.path.abspath(
             hou.text.expandString(
-                f"$MSUSDPLUGIN/../.jsonoutput/{outData['fullName']}.json"))
+                f"$MSUSDPLUGIN/../.jsonoutput/{asset['fullName']}.json"))
         
-        jsonutils.write_json(outData, file, indent=4, logger=Logger.getLogger("Dev"))
+        jsonutils.write_json(asset, file, indent=4, logger=Logger.getLogger("Dev"))

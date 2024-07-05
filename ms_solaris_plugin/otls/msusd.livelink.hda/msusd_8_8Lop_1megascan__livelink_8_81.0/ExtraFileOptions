@@ -1,0 +1,22 @@
+{
+	"OnDeleted/Cursor":{
+		"type":"intarray",
+		"value":[4,22]
+	},
+	"OnDeleted/IsExpr":{
+		"type":"bool",
+		"value":false
+	},
+	"OnDeleted/IsPython":{
+		"type":"bool",
+		"value":true
+	},
+	"OnDeleted/IsScript":{
+		"type":"bool",
+		"value":true
+	},
+	"OnDeleted/Source":{
+		"type":"string",
+		"value":""
+	}
+}

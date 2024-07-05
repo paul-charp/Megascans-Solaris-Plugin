@@ -1,0 +1,210 @@
+# Dialog script for msusd::megascan_livelink::1.0 automatically generated
+
+{
+    name	msusd::megascan_livelink::1.0
+    script	msusd::megascan_livelink::1.0
+    label	"Megascan LiveLink"
+
+    help {
+	""
+    }
+
+    inputlabel	1	"Input Stage"
+    inputlabel	2	"Input 2"
+    inputlabel	3	"Input 3"
+    inputlabel	4	"Input 4"
+
+    parm {
+        name    "sepparm4"
+        label   "Spacer"
+        type    separator
+        default { "" }
+        parmtag { "sidefx::layout_height" "small" }
+        parmtag { "sidefx::look" "blank" }
+    }
+    parm {
+        name    "start_livelink"
+        label   "Start Live Link"
+        type    button
+        joinnext
+        default { "0" }
+        parmtag { "script_callback_language" "python" }
+    }
+    parm {
+        name    "reset_livelink"
+        label   "Reset Live Link"
+        type    button
+        nolabel
+        joinnext
+        default { "0" }
+        help    "Reset Live Link"
+        parmtag { "button_icon" "hicon:/SVGIcons.index?BUTTONS_reload.svg" }
+        parmtag { "script_callback_language" "python" }
+    }
+    parm {
+        name    "port"
+        label   "   Port"
+        type    integer
+        joinnext
+        default { "24981" }
+        range   { 10000! 65535! }
+        parmtag { "script_callback_language" "python" }
+        parmtag { "sidefx::slider" "none" }
+        parmtag { "units" "" }
+    }
+    parm {
+        name    "labelparm"
+        label   " "
+        type    label
+        default { " " }
+    }
+    parm {
+        name    "sepparm2"
+        label   "Separator"
+        type    separator
+        default { "" }
+    }
+    parm {
+        name    "export_path"
+        label   "Export Location"
+        type    directory
+        joinnext
+        default { "$HIP/usd/assets" }
+        parmtag { "filechooser_mode" "write" }
+        parmtag { "script_callback_language" "python" }
+    }
+    parm {
+        name    "explore"
+        label   "Explore"
+        type    button
+        nolabel
+        default { "0" }
+        parmtag { "button_icon" "hicon:/SVGIcons.index?BUTTONS_folder.svg" }
+        parmtag { "script_callback_language" "python" }
+    }
+    parm {
+        name    "sepparm"
+        label   "Spacer"
+        type    separator
+        default { "" }
+        parmtag { "sidefx::layout_height" "small" }
+        parmtag { "sidefx::look" "blank" }
+    }
+    parm {
+        name    "thumb"
+        label   "Thumbnail"
+        type    ordinal
+        joinnext
+        default { "0" }
+        menu usetokenvalue {
+            "karma"     "Karma"
+            "viewport"  "Viewport"
+            "megascan"  "Megascan"
+        }
+        parmtag { "script_callback_language" "python" }
+    }
+    parm {
+        name    "thumb_size"
+        label   "   Size"
+        type    integer
+        default { "256" }
+        disablewhen "{ thumb == 2 }"
+        range   { 2! 512 }
+        parmtag { "script_callback_language" "python" }
+    }
+    parm {
+        name    "sepparm3"
+        label   "Spacer"
+        type    separator
+        default { "" }
+        parmtag { "sidefx::layout_height" "small" }
+        parmtag { "sidefx::look" "blank" }
+    }
+    parm {
+        name    "t_reference"
+        label   "Reference Asset on Stage"
+        type    toggle
+        default { "1" }
+        parmtag { "script_callback_language" "python" }
+    }
+    parm {
+        name    "sepparm5"
+        label   "Spacer"
+        type    separator
+        default { "" }
+        parmtag { "sidefx::layout_height" "small" }
+        parmtag { "sidefx::look" "blank" }
+    }
+    parm {
+        name    "t_gallery"
+        label   "Add Asset to Gallery :"
+        type    toggle
+        joinnext
+        default { "0" }
+        parmtag { "script_callback_language" "python" }
+    }
+    parm {
+        name    "gallery_path"
+        label   "Gallery File"
+        type    file
+        nolabel
+        default { "$HIP/megascans.db" }
+        disablewhen "{ t_gallery == 0 }"
+        parmtag { "filechooser_pattern" "*.db" }
+        parmtag { "script_callback_language" "python" }
+    }
+    parm {
+        name    "sepparm6"
+        label   "Spacer"
+        type    separator
+        default { "" }
+        parmtag { "sidefx::layout_height" "small" }
+        parmtag { "sidefx::look" "blank" }
+    }
+    parm {
+        name    "t_classes"
+        label   "Add Custom Classes"
+        type    toggle
+        default { "1" }
+        parmtag { "script_callback_language" "python" }
+    }
+    parm {
+        name    "classes"
+        label   "Classes"
+        type    string
+        default { "%categories megascan" }
+        disablewhen "{ t_classes == 0 }"
+        menutoggle {
+            "%categories"   "Asset Categories"
+        }
+        parmtag { "script_callback_language" "python" }
+    }
+    parm {
+        name    "sepparm7"
+        label   "Spacer"
+        type    separator
+        default { "" }
+        parmtag { "sidefx::layout_height" "medium" }
+        parmtag { "sidefx::look" "blank" }
+    }
+    groupsimple {
+        name    "folder0"
+        label   "3D Asset Settings"
+
+        parm {
+            name    "t_proxy"
+            label   "Use Lowest LOD as Proxy"
+            type    toggle
+            default { "1" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "t_proxy2"
+            label   "Use Lowest LOD as SimProxy"
+            type    toggle
+            default { "1" }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+}

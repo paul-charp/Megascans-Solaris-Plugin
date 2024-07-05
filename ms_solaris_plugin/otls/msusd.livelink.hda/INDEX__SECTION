@@ -1,0 +1,15 @@
+Operator:     msusd::megascan_livelink::1.0
+Label:        Megascan LiveLink
+Path:         oplib:/msusd::Lop/megascan_livelink::1.0?msusd::Lop/megascan_livelink::1.0
+Icon:         LOP_subnet
+Table:        Lop
+License:      
+Extra:        visibleoutputs=0 
+User:         
+Inputs:       0 to 0
+Outputs:      0
+Subnet:       true
+Python:       false
+Empty:        false
+Modified:     Fri Jul  5 18:24:26 2024
+

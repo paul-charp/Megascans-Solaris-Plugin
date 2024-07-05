@@ -1,0 +1,4 @@
+from msusd.SocketListener import SocketListener
+
+socketListener = SocketListener.getInstance()
+socketListener.stop()
