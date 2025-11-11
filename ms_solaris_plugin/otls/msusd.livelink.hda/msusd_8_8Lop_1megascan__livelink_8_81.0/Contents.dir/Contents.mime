@@ -31,7 +31,7 @@ Content-Disposition: attachment; filename="hdaroot.def"
 Content-Type: text/plain
 
 comment ""
-position -1.56711 1.40034
+position -2.5931 0.690589
 connectornextid 0
 flags =  lock off model off template off footprint off xray off bypass off display on render on highlight off unload off savedata off compress on colordefault on exposed on debug off
 outputsNamed3
@@ -47,7 +47,7 @@ stat
 {
   create -1
   modify -1
-  author paul.charpentier@PRS-7980X-03.mtc.wtf
+  author Paul@PAUL-DESKTOP
   access 0777
 }
 color UT_Color RGB 0.8 0.8 0.8 

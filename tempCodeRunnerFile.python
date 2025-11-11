@@ -1,0 +1,4 @@
+number: int = 15
+
+
+print(number)

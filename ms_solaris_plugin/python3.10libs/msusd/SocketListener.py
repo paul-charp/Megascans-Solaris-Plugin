@@ -1,6 +1,8 @@
 from PySide2.QtCore import QThread, Signal
 import time, socket
 
+import hou
+
 from .Logger import Logger
 from . import SettingsManager
 from .Utils.jsondebug import tmp_json_write
@@ -16,7 +18,7 @@ class SocketListener(QThread):
     Bridge_Call = Signal(str)
     __instance = None
 
-    def __init__(self):
+    def __init__(self, node: hou.Node):
         if SocketListener.__instance != None:
             SocketListener.getInstance()
 
@@ -25,12 +27,13 @@ class SocketListener(QThread):
 
         self.settings = SettingsManager.getInstance()
         self.logger = Logger.getLogger("SocketListener")
+        self.activeNode = node
 
         self.total_data = b""
         self.buffersize = 4096 * 2
         self.host = "localhost"
         self.socket_port = self.settings.getSettings("socket_port")
-        #self.Bridge_Call.connect(tmp_json_write)
+        
         self.Bridge_Call.connect(debugAssets)
 
     def __del__(self):
@@ -39,7 +42,8 @@ class SocketListener(QThread):
 
     def stop(self):
         self.logger.message("Socket Listener Stopped")
-        self.terminate()
+        self.stop()
+        del self
 
     def run(self):
         time.sleep(0.025)

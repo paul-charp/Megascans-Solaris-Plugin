@@ -1,7 +1,7 @@
 {
 	"OnDeleted/Cursor":{
 		"type":"intarray",
-		"value":[4,22]
+		"value":[3,1]
 	},
 	"OnDeleted/IsExpr":{
 		"type":"bool",
@@ -16,6 +16,26 @@
 		"value":true
 	},
 	"OnDeleted/Source":{
+		"type":"string",
+		"value":""
+	},
+	"PythonModule/Cursor":{
+		"type":"intarray",
+		"value":[1,1]
+	},
+	"PythonModule/IsExpr":{
+		"type":"bool",
+		"value":false
+	},
+	"PythonModule/IsPython":{
+		"type":"bool",
+		"value":true
+	},
+	"PythonModule/IsScript":{
+		"type":"bool",
+		"value":true
+	},
+	"PythonModule/Source":{
 		"type":"string",
 		"value":""
 	}

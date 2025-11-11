@@ -7,4 +7,5 @@ TypePropertiesOptions	TypePropertiesOptions
 Help	Help
 Tools.shelf	Tools.shelf
 OnDeleted	OnDeleted
+PythonModule	PythonModule
 ExtraFileOptions	ExtraFileOptions

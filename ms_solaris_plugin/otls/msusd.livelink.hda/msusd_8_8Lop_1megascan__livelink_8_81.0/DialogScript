@@ -28,6 +28,7 @@
         type    button
         joinnext
         default { "0" }
+        parmtag { "script_callback" "__import__('msusd').callbacks.onClick_StartLiveLink(kwargs)" }
         parmtag { "script_callback_language" "python" }
     }
     parm {
@@ -39,6 +40,7 @@
         default { "0" }
         help    "Reset Live Link"
         parmtag { "button_icon" "hicon:/SVGIcons.index?BUTTONS_reload.svg" }
+        parmtag { "script_callback" "__import__('msusd').callbacks.onClick_ResetLiveLink(kwargs)" }
         parmtag { "script_callback_language" "python" }
     }
     parm {
@@ -80,6 +82,7 @@
         nolabel
         default { "0" }
         parmtag { "button_icon" "hicon:/SVGIcons.index?BUTTONS_folder.svg" }
+        parmtag { "script_callback" "__import__('msusd').callbacks.onClick_Explore(kwargs)" }
         parmtag { "script_callback_language" "python" }
     }
     parm {

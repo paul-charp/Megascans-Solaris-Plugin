@@ -1,4 +1,4 @@
-from msusd.SocketListener import SocketListener
+import msusd
 
-socketListener = SocketListener.getInstance()
-socketListener.stop()
+
+msusd.callbacks.onDelete_LiveLinkNode(kwargs)

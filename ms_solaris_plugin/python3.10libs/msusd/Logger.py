@@ -208,6 +208,7 @@ class Logger:
         Returns:
             A logentry object
         """
+        
         return self.log(message, severity=hou.severityType.Fatal)
 
     def error(self, message) -> hou.logging.LogEntry:
